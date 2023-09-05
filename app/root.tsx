@@ -1,5 +1,5 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import { cssBundleHref } from "@remix-run/css-bundle"
+import type { LinksFunction } from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -7,27 +7,41 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-
+} from "@remix-run/react"
+import styleSheet from "~/tailwind.css"
+import { ThemeProvider, useTheme } from "~/utils/theme-provider"
+import { Navigation } from "~/components/index"
+import clsx from "clsx"
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-];
+  { rel: "stylesheet", href: styleSheet },
 
-export default function App() {
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+]
+
+function App() {
+  const [theme] = useTheme()
   return (
-    <html lang="en">
+    <html lang="en" className={clsx(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-white text-black dark:bg-black dark:text-white ">
+        <Navigation />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
-  );
+  )
+}
+export default function AppWithProviders() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  )
 }

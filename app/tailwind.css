@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.dark {
+  --text-color: white;
+  --background-color: rgb(55, 65, 81);
+}
+html.light {
+  --text-color: black;
+  --background-color: "#fffff";
+}
