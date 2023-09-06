@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react"
 import DarkModeIcon from "~/assets/dark-mode.png"
 import LightModeIcon from "~/assets/light-mode.png"
 import { Theme, useTheme } from "~/utils/theme-provider"
@@ -6,7 +7,11 @@ export function Navigation() {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <span className="font-semibold text-xl tracking-tight">Retirement</span>
+        <Link to="/">
+          <span className="font-semibold text-xl tracking-tight">
+            Retirement
+          </span>
+        </Link>
       </div>
       <div className="block lg:hidden">
         <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">

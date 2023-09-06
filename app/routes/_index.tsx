@@ -1,7 +1,26 @@
-import type { V2_MetaFunction } from "@remix-run/node"
+import { json, redirect, type V2_MetaFunction } from "@remix-run/node"
+import { Form } from "@remix-run/react"
 import { PlanCards, Title } from "~/components/index"
 export const meta: V2_MetaFunction = () => {
   return [{ title: "Retirement App" }, { name: "Taking retirement seriously" }]
+}
+
+export async function loader({ request }: { request: Request }) {
+  console.log("What is loader request?", request)
+  // const formData = await request.formData()
+  // const value = Object.fromEntries(formData)
+  // console.log("What is loader data?", value)
+  return json({
+    message: "Hello World",
+  })
+}
+
+export async function action({ request }: { request: Request }) {
+  const formData = await request.formData()
+  const value = Object.fromEntries(formData)
+  // const formData = new URLSearchParams(await request.text())
+  console.log("formData", value)
+  return redirect(`/plan?age=${value.age}&salary=${value["annual-income"]}`)
 }
 
 export default function Index() {
@@ -14,8 +33,13 @@ export default function Index() {
             help you paint what the picture would look like.
           </p>
         </Title>
+        <Title subText>
+          <p>
+            Currently, there is only calculations for single status. Married,
+            filing jointly, and head of household are not implemented.{" "}
+          </p>
+        </Title>
         <UserForm />
-        {/* <PlanCards /> */}
       </div>
     </div>
   )
@@ -28,8 +52,7 @@ function UserForm() {
       <Title subText>
         <p>Lets start with the numbers!</p>
       </Title>
-      <form
-        action="/user"
+      <Form
         method="post"
         className="grid gap-4 justify-center items-center border"
       >
@@ -41,7 +64,8 @@ function UserForm() {
           What is your annual income?
           <input type="number" name="annual-income" className="border ml-4" />
         </div>
-      </form>
+        <input type="submit" value="Submit" />
+      </Form>
     </div>
   )
 }

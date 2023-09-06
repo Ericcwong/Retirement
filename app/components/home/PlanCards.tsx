@@ -48,6 +48,11 @@ export function PlanCards() {
           <div
             key={option.name}
             className=" shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col"
+            onClick={() => {
+              // Assuming you want to append the option's name to the URL
+              window.location.href = `${window.location.href}&plan=${option.name}`
+            }}
+            style={{ cursor: "pointer" }} // Change the cursor to indicate it's clickable
           >
             <div className="mb-4">
               <div className=" font-bold text-xl mb-2 text-gray-700">
